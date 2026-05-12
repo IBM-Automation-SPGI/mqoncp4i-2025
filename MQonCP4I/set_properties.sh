@@ -11,14 +11,6 @@ export STUDENT_NUM=$2
 echo "[INFO] Generating setup.properties"
 echo "[INFO] Update ${bold}setup.properties${normal} with your student number"
 
-if [ $STUDENT_NUM -lt 11 ]; then
-  export OCP_CLUSTER1="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-else
-  export OCP_CLUSTER1="yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
-fi
-#
-export OCP_CLUSTER2="zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-#
 envsubst < setup.properties_template > setup.properties
 
 #( echo 'cat <<EOF' ; cat setup.properties_template ; echo EOF ) | sh > setup.properties
