@@ -13,7 +13,7 @@ export QMname=$3
 export CHLCAPS=$4
 export APPQ=$5
 export STUDENT_NUM=$6
-  
+
 oc login $OCP_CLUSTER1 -u $OCP_CLUSTER_USER1 -p $OCP_CLUSTER_PASSWORD1 > /dev/null 2>&1
 oc project $TARGET_NAMESPACE
 export HOST1="$(oc get route $QMInstance-ibm-mq-qm -n $TARGET_NAMESPACE -o jsonpath='{.spec.host}')"
@@ -22,7 +22,10 @@ oc login $OCP_CLUSTER2 -u $OCP_CLUSTER_USER2 -p $OCP_CLUSTER_PASSWORD2 > /dev/nu
 oc project $TARGET_NAMESPACE
 export HOST2="$(oc get route $QMInstance-ibm-mq-qm -n $TARGET_NAMESPACE -o jsonpath='{.spec.host}')"
 
-(echo "cat <<EOF" ; cat ccdt_CRR_template.json ; echo EOF ) | sh > ccdt_CRR_generated.json
+oc login $OCP_CLUSTER1 -u $OCP_CLUSTER_USER1 -p $OCP_CLUSTER_PASSWORD1 > /dev/null 2>&1
+oc project $TARGET_NAMESPACE
+
+( echo "cat <<EOF" ; cat ccdt_CRR_template.json ; echo EOF ) | sh > ccdt_CRR_generated.json
 
 echo "Starting amqsghac" $QMname
 /opt/mqm/samp/bin/amqsghac $APPQ $QMname
